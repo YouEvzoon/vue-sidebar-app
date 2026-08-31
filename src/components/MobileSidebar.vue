@@ -55,9 +55,9 @@ const handleSelect = (item) => {
   gap: 0.4rem;
   padding: 0.7rem 0.7rem 0.8rem;
   border-radius: 28px;
-  background: rgba(17, 18, 23, 0.96);
+  background: var(--bg-sidebar);
   border: 1px solid rgba(255, 255, 255, 0.06);
-  box-shadow: 0 18px 35px rgba(0, 0, 0, 0.28);
+  box-shadow: 0 18px 35px rgba(0, 0, 0, 0.18);
   z-index: 30;
 }
 
@@ -77,20 +77,20 @@ const handleSelect = (item) => {
   min-height: 62px;
   border: none;
   background: transparent;
-  color: rgba(255, 255, 255, 0.68);
+  color: var(--text-muted);
   cursor: pointer;
   border-radius: 18px;
-  transition: all 0.2s ease;
+  transition: background-color 0.2s ease, transform 0.2s ease, color 0.2s ease;
 }
 
 .nav-item:hover {
-  background: rgba(255, 255, 255, 0.04);
+  background: var(--hover-bg);
 }
 
 .nav-item.active {
-  background: linear-gradient(180deg, rgba(129, 105, 255, 0.9), rgba(117, 90, 242, 0.78));
-  color: #fff;
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.18);
+  background: var(--primary-accent-rgb, rgba(137, 180, 250, 0.18));
+  color: var(--text-main);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.04);
 }
 
 .icon {
@@ -99,6 +99,7 @@ const handleSelect = (item) => {
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  color: currentColor;
 }
 
 .label {
@@ -106,5 +107,6 @@ const handleSelect = (item) => {
   font-weight: 600;
   letter-spacing: 0.01em;
   line-height: 1;
+  color: currentColor;
 }
 </style>
