@@ -1,57 +1,45 @@
 <script setup>
-import { ref, watch, markRaw } from 'vue'
+import { ref, markRaw, watch } from 'vue'
 import SidebarItem from './SidebarItem.vue'
 import InicioView from './InicioView.vue'
 import AnaliticasView from './AnaliticasView.vue'
 import ProyectosView from './ProyectosView.vue'
 import AjustesView from './AjustesView.vue'
 
+const props = defineProps({
+  activeItem: {
+    type: String,
+    default: 'Inicio',
+  },
+  isDarkMode: {
+    type: Boolean,
+    default: true,
+  },
+})
+
 const isCollapsed = ref(false)
-const isDarkMode = ref(true)
-const activeItem = ref('Inicio')
 
 const savedCollapsed = typeof window !== 'undefined'
   ? localStorage.getItem('sidebar-collapsed')
-  : null
-
-const savedTheme = typeof window !== 'undefined'
-  ? localStorage.getItem('theme-dark')
   : null
 
 if (savedCollapsed !== null) {
   isCollapsed.value = JSON.parse(savedCollapsed)
 }
 
-if (savedTheme !== null) {
-  isDarkMode.value = JSON.parse(savedTheme)
-}
-
-const emit = defineEmits(['select-component'])
+const emit = defineEmits(['select-component', 'toggle-theme'])
 
 const toggleSidebar = () => {
   isCollapsed.value = !isCollapsed.value
 }
 
 const handleSelect = (item) => {
-  activeItem.value = item.name
-  emit('select-component', item.component)
+  emit('select-component', item.component, item.name)
 }
 
 watch(isCollapsed, (newValue) => {
   if (typeof window !== 'undefined') {
     localStorage.setItem('sidebar-collapsed', JSON.stringify(newValue))
-  }
-}, { immediate: true })
-
-watch(isDarkMode, (newValue) => {
-  if (typeof window !== 'undefined') {
-    localStorage.setItem('theme-dark', JSON.stringify(newValue))
-  }
-
-  if (newValue) {
-    document.body.classList.remove('light-theme')
-  } else {
-    document.body.classList.add('light-theme')
   }
 }, { immediate: true })
 
@@ -82,20 +70,20 @@ const menuItems = [
         :key="item.name"
         :item="item"
         :is-collapsed="isCollapsed"
-        :is-active="activeItem === item.name"
+        :is-active="props.activeItem === item.name"
         @select="handleSelect"
       />
     </nav>
 
     <div class="sidebar-footer">
-      <label class="theme-switch" :title="isCollapsed ? (isDarkMode ? 'Modo Oscuro' : 'Modo Claro') : ''">
-        <input type="checkbox" v-model="isDarkMode" />
+      <label class="theme-switch" :title="isCollapsed ? (props.isDarkMode ? 'Modo Oscuro' : 'Modo Claro') : ''">
+        <input type="checkbox" :checked="props.isDarkMode" @change="emit('toggle-theme')" />
         <span class="slider">
-          <span class="switch-icon material-symbols-rounded">{{ isDarkMode ? 'dark_mode' : 'light_mode' }}</span>
+          <span class="switch-icon material-symbols-rounded">{{ props.isDarkMode ? 'dark_mode' : 'light_mode' }}</span>
         </span>
       </label>
       <span v-if="!isCollapsed" class="theme-label">
-        {{ isDarkMode ? 'Modo Oscuro' : 'Modo Claro' }}
+        {{ props.isDarkMode ? 'Modo Oscuro' : 'Modo Claro' }}
       </span>
     </div>
   </aside>
