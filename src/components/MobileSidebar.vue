@@ -16,10 +16,9 @@ const emit = defineEmits(['select-component'])
 
 const menuItems = [
   { name: 'Inicio', iconName: 'home', component: markRaw(InicioView) },
-  { name: 'Buscar', iconName: 'search', component: markRaw(AnaliticasView) },
   { name: 'Analíticas', iconName: 'bar_chart', component: markRaw(AnaliticasView) },
-  { name: 'Historial', iconName: 'history', component: markRaw(ProyectosView) },
-  { name: 'Perfil', iconName: 'person', component: markRaw(AjustesView) },
+  { name: 'Proyectos', iconName: 'folder', component: markRaw(ProyectosView) },
+  { name: 'Ajustes', iconName: 'settings', component: markRaw(AjustesView) },
 ]
 
 const handleSelect = (item) => {
@@ -34,7 +33,7 @@ const handleSelect = (item) => {
       :key="item.name"
       type="button"
       class="nav-item"
-      :class="{ active: props.activeItem === item.name || (item.name === 'Inicio' && props.activeItem === 'Home') }"
+      :class="{ active: props.activeItem === item.name }"
       @click="handleSelect(item)"
     >
       <span class="material-symbols-rounded icon">{{ item.iconName }}</span>
