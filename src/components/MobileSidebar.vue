@@ -50,7 +50,7 @@ const handleSelect = (item) => {
   bottom: 1rem;
   transform: translateX(-50%);
   width: min(90vw, 420px);
-  display: flex;
+  display: none;
   align-items: center;
   justify-content: space-between;
   gap: 0.4rem;
@@ -60,6 +60,12 @@ const handleSelect = (item) => {
   border: 1px solid rgba(255, 255, 255, 0.06);
   box-shadow: 0 18px 35px rgba(0, 0, 0, 0.28);
   z-index: 30;
+}
+
+@media (max-width: 767px) {
+  .mobile-navbar {
+    display: flex;
+  }
 }
 
 .nav-item {
