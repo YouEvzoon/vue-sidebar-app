@@ -1,0 +1,8 @@
+@import './base.css';
+
+/* Clases globales reutilizables si no usas Tailwind */
+.btn-primary {
+  background-color: var(--primary-color);
+  border-radius: 6px;
+  padding: 0.5rem 1rem;
+}
